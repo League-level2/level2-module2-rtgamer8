@@ -5,17 +5,19 @@
 
 class Segment {
 
-//Add x and y member variables. They will hold the corner location of each segment of the snake.
-int x; 
-int y;
-// Add a constructor with parameters to initialize each variable.
-Segment(int x1, int y1){
-  
-this.x = x1;
-this.y = y1;
+  //Add x and y member variables. They will hold the corner location of each segment of the snake.
+  int x; 
+  int y;
+  // Add a constructor with parameters to initialize each variable.
+  Segment(int x1, int y1) {
 
+    this.x = x1;
+    this.y = y1;
+  }
 }
-}
+int v =1;
+int a =2;
+
 
 //*
 // ***** GAME VARIABLES *****
@@ -27,28 +29,26 @@ Segment head;
 int foodX;
 int foodY;
 
-
-
+int direction = UP;
+int food = 0;
 //*
 // ***** SETUP METHODS *****
 // These methods are called at the start of the game.
 //
 
 void setup() {
-size(500,500);
-dropFood();
-frameRate(20);
-head = new Segment(250,250);
-/*
-  
-*/
+  size(500, 500);
+  dropFood();
+  frameRate(20);
+  head = new Segment(250, 250);
+ 
 }
 
 void dropFood() {
   //Set the food in a new random location
-    
-    foodX = ((int)random(50)*10);
-    foodY = ((int)random(50)*10);
+
+  foodX = ((int)random(50)*10);
+  foodY = ((int)random(50)*10);
 }
 
 
@@ -59,25 +59,23 @@ void dropFood() {
 //*
 
 void draw() {
-background(#74EA0E);
-drawFood();
-drawSnake();
-
+  background(#74EA0E);
+  drawFood();
+  drawSnake();
 }
 
 void drawFood() {
   //Draw the food
   fill(#FF0000);
-  rect(100,100,10,10);
-  
+  rect(100, 100, 10, 10);
 }
 
 void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(#0038FC);
-  rect(10,10,10,10);
+  rect(head.x, head.y, 10, 10);
+  eat();
 }
-
 
 //*
 // ***** TAIL MANAGEMENT METHODS *****
@@ -85,73 +83,217 @@ void drawSnake() {
 //*
 
 void drawTail() {
-  //Draw each segment of the tail 
-
+  //Draw each segment of the tail
 }
 
 void manageTail() {
   //After drawing the tail, add a new segment at the "start" of the tail and remove the one at the "end" 
   //This produces the illusion of the snake tail moving.
-  
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
- 
 }
 
-/*
 
-
-
------   ----- 
-{ 0 }   { 0 } 
-     / 
-    /___ 
- (          )
-  \________/
-    
 
 
 //*
 // ***** CONTROL METHODS *****
-// These methods are used to change what is happening to the snake
+//These methods are used to change what is happening to the snake
 //*
 
 void keyPressed() {
   //Set the direction of the snake according to the arrow keys pressed
-  
+  if (key == CODED) {
+
+    if (keyCode== UP) {
+      direction = UP;
+    }
+
+    if (keyCode== DOWN) {
+      direction = DOWN;
+    }
+
+
+    if (keyCode== LEFT) {
+      direction = LEFT;
+    }
+
+
+    if (keyCode== RIGHT) {
+      direction = RIGHT;
+    }
+    
+    
+   // if(keyCode == UP); {
+   //   direction != DOWN;
+   // }
+   // 
+    
+    
+    
+    
+    
+  }
 }
 
 void move() {
   //Change the location of the Snake head based on the direction it is moving.
-  
-    /*
+
+
   switch(direction) {
   case UP:
-    // move head up here 
+    head.y -=1;
     break;
   case DOWN:
-    // move head down here 
+    head.y +=1;
     break;
   case LEFT:
-   // figure it out 
+    head.x -=1;
     break;
   case RIGHT:
-    // mystery code goes here 
+    head.x +=1;
     break;
   }
-  */
-
-
-void checkBoundaries() {
- //If the snake leaves the frame, make it reappear on the other side
- 
+  checkBoundaries();
 }
+void checkBoundaries() {
+  //If the snake leaves the frame, make it reappear on the other side
+  if (head.x < 0) {
+    head.x = 500;
+  }
+
+  if (head.x > 500) {
+    head.x = 0;
+  }
 
 
+  if (head.y < 0) {
+    head.y = 500;
+  }
+
+
+  if (head.x > 500) {
+    head.x = 0;
+  }
+}
+ 
 
 void eat() {
   //When the snake eats the food, its tail should grow and more food appear
-
+  food +=1;
+  //iN tHIs lIn3 MaK3 C0d3 tO dRoP a N3w pIi3c3 oF F0oD
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*
+ -----   ----- 
+ { 0 }   { 0 } 
+       / 
+      /___ 
+   \________/ 
+     (_/
+  
+
+   */
