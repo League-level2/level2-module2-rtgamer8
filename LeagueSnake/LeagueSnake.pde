@@ -109,6 +109,7 @@ void keyPressed() {
 
     if (keyCode== UP) {
       direction = UP;
+      
     }
 
     if (keyCode== DOWN) {
@@ -124,17 +125,21 @@ void keyPressed() {
     if (keyCode== RIGHT) {
       direction = RIGHT;
     }
+    if(keyCode == UP){
+      
+      move();
+      
+      
+    }
+    if(keyCode == UP && keyCode == DOWN){
+      direction = UP;
+      move();
+    }
     
-    
-   // if(keyCode == UP); {
-   //   direction != DOWN;
-   // }
-   // 
-    
-    
-    
-    
-    
+    if(keyCode == DOWN && keyCode == UP){
+      direction = UP;
+      move();
+    }
   }
 }
 
@@ -145,6 +150,7 @@ void move() {
   switch(direction) {
   case UP:
     head.y -=1;
+    println("This is head.y " + head.y);
     break;
   case DOWN:
     head.y +=1;
@@ -183,117 +189,5 @@ void checkBoundaries() {
 void eat() {
   //When the snake eats the food, its tail should grow and more food appear
   food +=1;
-  //iN tHIs lIn3 MaK3 C0d3 tO dRoP a N3w pIi3c3 oF F0oD
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /*
- -----   ----- 
- { 0 }   { 0 } 
-       / 
-      /___ 
-   \________/ 
-     (_/
   
-
-   */
+}
