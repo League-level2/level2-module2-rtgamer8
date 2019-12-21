@@ -29,6 +29,7 @@ Segment head;
 int foodX;
 int foodY;
 
+
 int direction = UP;
 int food = 0;
 //*
@@ -41,7 +42,6 @@ void setup() {
   dropFood();
   frameRate(20);
   head = new Segment(250, 250);
- 
 }
 
 void dropFood() {
@@ -49,9 +49,9 @@ void dropFood() {
 
   foodX = ((int)random(50)*10);
   foodY = ((int)random(50)*10);
+  
+
 }
-
-
 
 //*
 // ***** DRAW METHODS *****
@@ -62,19 +62,20 @@ void draw() {
   background(#74EA0E);
   drawFood();
   drawSnake();
+  eat();
 }
 
 void drawFood() {
   //Draw the food
   fill(#FF0000);
-  rect(100, 100, 10, 10);
+  rect(foodX, foodY, 10, 10);
 }
 
 void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(#0038FC);
   rect(head.x, head.y, 10, 10);
-  eat();
+  
 }
 
 //*
@@ -84,6 +85,7 @@ void drawSnake() {
 
 void drawTail() {
   //Draw each segment of the tail
+  rect(10,10,10,10);
 }
 
 void manageTail() {
@@ -93,101 +95,94 @@ void manageTail() {
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
+
 }
 
 
+  //*
+  // ***** CONTROL METHODS *****
+  //These methods are used to change what is happening to the snake
+  //*
+
+  void keyPressed() {
+    //Set the direction of the snake according to the arrow keys pressed
+    if (key == CODED) {
+
+      if (keyCode == RIGHT && direction != LEFT) {
+        direction = RIGHT;
+        move();
+      }
+
+      if (keyCode == LEFT && direction != RIGHT) {
+        direction = LEFT;
+        move();
+      } 
 
 
-//*
-// ***** CONTROL METHODS *****
-//These methods are used to change what is happening to the snake
-//*
+      if (keyCode == UP && direction != DOWN) {
+        direction = UP;
+        move();
+      }
 
-void keyPressed() {
-  //Set the direction of the snake according to the arrow keys pressed
-  if (key == CODED) {
+      if (keyCode == DOWN && direction != UP) {
+        direction = DOWN;
+        move();
+      }
+    }
+  }
 
-    if (keyCode== UP) {
-      direction = UP;
-      
+
+  void move() {
+    //Change the location of the Snake head based on the direction it is moving.
+
+
+    switch(direction) {
+    case UP:
+      head.y -=1;
+      println("This is head.y " + head.y);
+      break;
+    case DOWN:
+      head.y +=1;
+      break;
+    case LEFT:
+      head.x -=1;
+      break;
+    case RIGHT:
+      head.x +=1;
+      break;
+    }
+    checkBoundaries();
+  }
+  void checkBoundaries() {
+    //If the snake leaves the frame, make it reappear on the other side
+    if (head.x < 0) {
+      head.x = 500;
     }
 
-    if (keyCode== DOWN) {
-      direction = DOWN;
+    if (head.x > 500) {
+      head.x = 0;
     }
 
 
-    if (keyCode== LEFT) {
-      direction = LEFT;
+    if (head.y < 0) {
+      head.y = 500;
     }
 
 
-    if (keyCode== RIGHT) {
-      direction = RIGHT;
+    if (head.x > 500) {
+      head.x = 0;
     }
-    if(keyCode == UP){
-      
-      move();
-      
-      
-    }
-    if(keyCode == UP && keyCode == DOWN){
-      direction = UP;
-      move();
+  }
+
+
+  void eat() {
+    //When the snake eats the food, its tail should grow and more food appear
+    if (head.x == foodX && head.y == foodY){
+        food +=1;
+        dropFood();
     }
     
-    if(keyCode == DOWN && keyCode == UP){
-      direction = UP;
-      move();
-    }
-  }
-}
-
-void move() {
-  //Change the location of the Snake head based on the direction it is moving.
-
-
-  switch(direction) {
-  case UP:
-    head.y -=1;
-    println("This is head.y " + head.y);
-    break;
-  case DOWN:
-    head.y +=1;
-    break;
-  case LEFT:
-    head.x -=1;
-    break;
-  case RIGHT:
-    head.x +=1;
-    break;
-  }
-  checkBoundaries();
-}
-void checkBoundaries() {
-  //If the snake leaves the frame, make it reappear on the other side
-  if (head.x < 0) {
-    head.x = 500;
-  }
-
-  if (head.x > 500) {
-    head.x = 0;
-  }
-
-
-  if (head.y < 0) {
-    head.y = 500;
-  }
-
-
-  if (head.x > 500) {
-    head.x = 0;
-  }
-}
+    
  
-
-void eat() {
-  //When the snake eats the food, its tail should grow and more food appear
-  food +=1;
-  
-}
+    
+  }
