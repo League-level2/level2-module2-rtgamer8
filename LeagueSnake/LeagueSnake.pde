@@ -24,12 +24,14 @@ int a =2;
 // All the game variables that will be shared by the game methods are here
 
 
+ArrayList<Segment> tail = new ArrayList<Segment>();
+
+
 Segment head;
 
 int foodX;
 int foodY;
-
-
+           
 int direction = UP;
 int food = 0;
 //*
@@ -75,7 +77,7 @@ void drawSnake() {
   //Draw the head of the snake followed by its tail
   fill(#0038FC);
   rect(head.x, head.y, 10, 10);
-  
+  manageTail();
 }
 
 //*
@@ -85,19 +87,35 @@ void drawSnake() {
 
 void drawTail() {
   //Draw each segment of the tail
-  rect(10,10,10,10);
+  for(int i = 0; i< tail.size(); i++){
+   rect(tail.get(i).x +10,tail.get(i).y ,10,10); 
+  }
+  print (tail.size());
 }
 
 void manageTail() {
   //After drawing the tail, add a new segment at the "start" of the tail and remove the one at the "end" 
   //This produces the illusion of the snake tail moving.
+  checkTailCollision();
+  drawTail();
+  tail.add(new Segment(head.x + 10,head.y ));
+  tail.remove(0);
+ 
 }
 
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
-
+  for(int i = 0; i< tail.size(); i++){
+    
+  
+if(head.x == tail.get(i).x && head.y == tail.get(i).y){
+  
+  food =1;
+ tail = new ArrayList<Segment>();
+    tail.add(new Segment(head.x,head.y));
 }
-
+  }
+}
 
   //*
   // ***** CONTROL METHODS *****
@@ -180,6 +198,7 @@ void checkTailCollision() {
     if (head.x == foodX && head.y == foodY){
         food +=1;
         dropFood();
+   tail.add(new Segment(head.x + 10,head.y));
     }
     
     
